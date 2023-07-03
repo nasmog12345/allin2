@@ -9,7 +9,7 @@ import ch.zhaw.sml.iwi.meng.leantodo.entity.Excercise;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.ExcerciseRepository;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSession;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSessionDTO;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingsSessionRepository;
+import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSessionRepository;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.User;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.UserRepository;
 
@@ -23,7 +23,7 @@ public class TrainingController {
     private ExcerciseRepository excerciseRepository;
 
     @Autowired
-    private TrainingsSessionRepository trainingSessionRepository;
+    private TrainingSessionRepository trainingSessionRepository;
 
     public List<TrainingSession> getAllSessions(String username) {
 
