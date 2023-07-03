@@ -23,21 +23,23 @@ public class TokenEndpoint {
     private TokenGenerator tokenGenerator;
 
     @RequestMapping(path = "/auth/token", method = RequestMethod.GET)
-    @PreAuthorize("isAuthenticated() AND hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     public UserAuthResponse token(Principal principal, HttpServletResponse response) {
-        return createTokenSetCookie(principal,response);
+        return createTokenSetCookie(principal, response);
     }
 
-    // The same functionality as '/auth/token' but authenticated by token instead of basic security
+    // The same functionality as '/auth/token' but authenticated by token instead of
+    // basic security
     @RequestMapping(path = "/auth/refresh", method = RequestMethod.GET)
-    @PreAuthorize("isAuthenticated() AND hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     public UserAuthResponse refresh(Principal principal, HttpServletResponse response) {
-        return createTokenSetCookie(principal,response);
+        return createTokenSetCookie(principal, response);
     }
 
-    // If logout is desired, we replace the client token without content and set its expiration time to 0
+    // If logout is desired, we replace the client token without content and set its
+    // expiration time to 0
     @RequestMapping(path = "/auth/logout", method = RequestMethod.GET)
-    @PreAuthorize("isAuthenticated() AND hasRole('USER')")
+    @PreAuthorize("isAuthenticated()")
     public void logout(Principal principal, HttpServletResponse response) {
         Cookie cookie = new Cookie("Authentication", null);
         cookie.setHttpOnly(true);
@@ -50,8 +52,9 @@ public class TokenEndpoint {
         String username = principal.getName();
         UserAuthResponse userAuthResponse = tokenGenerator.generateJWT(username);
         Cookie cookie = new Cookie("Authentication", userAuthResponse.getJwsToken());
-        
-        // This is essential! It must be HTTP-Only, otherwise it can be accessed by JavaScript
+
+        // This is essential! It must be HTTP-Only, otherwise it can be accessed by
+        // JavaScript
         cookie.setHttpOnly(true);
 
         cookie.setPath("/");

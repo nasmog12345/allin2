@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,7 @@ public class User {
     @JsonIgnore
     private String passwordHash;
 
-    @ManyToMany
-    private List<Role> roles = new ArrayList<>();
+    @OneToMany
+    private List<TrainingSession> sessions = new ArrayList<>();
 
 }
