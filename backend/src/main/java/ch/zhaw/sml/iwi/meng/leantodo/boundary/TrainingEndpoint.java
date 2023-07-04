@@ -21,6 +21,7 @@ public class TrainingEndpoint {
 
     @PostMapping
     public TrainingSession createTrainingSession(@RequestBody TrainingSession trainingSession) {
+        trainingSession.setId(null);
         return trainingController.createTrainingSession(trainingSession);
     }
 

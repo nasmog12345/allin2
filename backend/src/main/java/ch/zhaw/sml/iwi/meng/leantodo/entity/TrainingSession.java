@@ -31,6 +31,4 @@ public class TrainingSession {
     @OneToMany
     private List<Excercise> excercises = new ArrayList<>();
 
-    @ManyToOne
-    private User user; // this associates TrainingSession with User
 }
