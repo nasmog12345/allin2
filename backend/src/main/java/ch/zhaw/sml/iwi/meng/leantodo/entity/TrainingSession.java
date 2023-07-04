@@ -26,6 +26,7 @@ public class TrainingSession {
 
     private Date trainingDate; // This is now a java.util.Date
     private int trainingDurationMinutes;
+    private int rep;
 
     @OneToMany
     private List<Excercise> excercises = new ArrayList<>();

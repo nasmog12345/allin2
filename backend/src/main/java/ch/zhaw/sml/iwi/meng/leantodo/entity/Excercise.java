@@ -18,5 +18,5 @@ public class Excercise {
     private Long id;
 
     private String name;
-    private int rep;
+    
 }

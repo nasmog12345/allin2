@@ -1,55 +1,29 @@
 package ch.zhaw.sml.iwi.meng.leantodo.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-import ch.zhaw.sml.iwi.meng.leantodo.entity.Excercise;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.ExcerciseRepository;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSession;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSessionDTO;
 import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSessionRepository;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.User;
-import ch.zhaw.sml.iwi.meng.leantodo.entity.UserRepository;
 
-@Component
+import java.util.List;
+
+@Controller
 public class TrainingController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final TrainingSessionRepository trainingSessionRepository;
 
     @Autowired
-    private ExcerciseRepository excerciseRepository;
-
-    @Autowired
-    private TrainingSessionRepository trainingSessionRepository;
-
-    public List<TrainingSession> getAllSessions(String username) {
-
-        User u = userRepository.getReferenceById(username);
-
-        return u.getSessions();
-
+    public TrainingController(TrainingSessionRepository trainingSessionRepository) {
+        this.trainingSessionRepository = trainingSessionRepository;
     }
 
-   public void createTrainingSession(String username, TrainingSessionDTO sessionDTO) {
-    User user = userRepository.findById(username).orElseThrow(() -> new RuntimeException("User not found"));
-    Excercise excercise = excerciseRepository.findByName(sessionDTO.getExcerciseName()).orElseGet(() -> {
-        Excercise newExcercise = new Excercise();
-        newExcercise.setName(sessionDTO.getExcerciseName());
-        newExcercise.setRep(sessionDTO.getRep());
-        return excerciseRepository.save(newExcercise);
-    });
+    public TrainingSession createTrainingSession(TrainingSession trainingSession) {
+        return trainingSessionRepository.save(trainingSession);
+    }
 
-    TrainingSession trainingSession = new TrainingSession();
-    trainingSession.setTrainingDate(sessionDTO.getTrainingDate());
-    trainingSession.setTrainingDurationMinutes(sessionDTO.getDurationMinutes());
-    trainingSession.getExcercises().add(excercise);
-    trainingSession.setUser(user);
-
-    trainingSessionRepository.save(trainingSession);
-}
-
-
+    public List<TrainingSession> getTrainingSessions() {
+        return trainingSessionRepository.findAll();
+    }
 }
