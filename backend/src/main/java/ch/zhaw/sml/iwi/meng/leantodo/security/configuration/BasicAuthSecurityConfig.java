@@ -42,6 +42,8 @@ public class BasicAuthSecurityConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain filterChainAuthBasic(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable();
+
         http.antMatcher("/auth/token")
                 .httpBasic().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

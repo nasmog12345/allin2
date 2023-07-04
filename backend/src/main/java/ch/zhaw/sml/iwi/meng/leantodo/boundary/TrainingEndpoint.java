@@ -1,6 +1,7 @@
 package ch.zhaw.sml.iwi.meng.leantodo.boundary;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import ch.zhaw.sml.iwi.meng.leantodo.controller.TrainingController;
@@ -9,7 +10,6 @@ import ch.zhaw.sml.iwi.meng.leantodo.entity.TrainingSession;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sessions")
 public class TrainingEndpoint {
 
     private final TrainingController trainingController;
@@ -19,7 +19,8 @@ public class TrainingEndpoint {
         this.trainingController = trainingController;
     }
 
-    @PostMapping
+    @PostMapping(path = "/api/sessions")
+    @PreAuthorize("isAuthenticated()")
     public TrainingSession createTrainingSession(@RequestBody TrainingSession trainingSession) {
         trainingSession.setId(null);
         return trainingController.createTrainingSession(trainingSession);
