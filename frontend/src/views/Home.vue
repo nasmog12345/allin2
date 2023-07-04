@@ -114,8 +114,6 @@ export default defineComponent({
       }
     };
 
-  
-
     return {
       trainingDate,
       showDatePicker,

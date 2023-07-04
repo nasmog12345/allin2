@@ -26,7 +26,8 @@ public class TrainingEndpoint {
         return trainingController.createTrainingSession(trainingSession);
     }
 
-    @GetMapping
+    @GetMapping(path = "/api/sessions")
+    @PreAuthorize("isAuthenticated()")
     public List<TrainingSession> getTrainingSessions() {
         return trainingController.getTrainingSessions();
     }
