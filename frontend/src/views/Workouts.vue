@@ -1,47 +1,50 @@
 <template>
-  <ion-content>
-    <ion-list>
-      <ion-item v-for="session in trainingSessions" :key="session.id">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>{{ session.exercise }}</ion-card-title>
-            <ion-card-subtitle
-              >Datum: {{ session.trainingDate }}</ion-card-subtitle
-            >
-          </ion-card-header>
+  <ion-page>
+    <ion-content>
+      <ion-list>
+        <ion-item v-for="session in trainingSessions" :key="session.id">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>{{ session.exercise }}</ion-card-title>
+              <ion-card-subtitle
+                >Datum: {{ session.trainingDate }}</ion-card-subtitle
+              >
+            </ion-card-header>
 
-          <ion-card-content>
-            <div>
-              Dauer:
-              <ion-badge color="primary"
-                >{{ session.trainingDurationMinutes }} min</ion-badge
-              >
-            </div>
-            <div>
-              Wiederholungen:
-              <ion-badge color="secondary">{{ session.rep }}</ion-badge>
-            </div>
-            <div>
-              Letzte Dauer-Differenz:
-              <ion-badge color="success"
-                >{{ getLastDurationDifference(session) }} min</ion-badge
-              >
-            </div>
-            <div>
-              Letzte Wiederholungs-Differenz:
-              <ion-badge color="danger">{{
-                getLastRepDifference(session)
-              }}</ion-badge>
-            </div>
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+            <ion-card-content>
+              <div>
+                Dauer:
+                <ion-badge color="primary"
+                  >{{ session.trainingDurationMinutes }} min</ion-badge
+                >
+              </div>
+              <div>
+                Wiederholungen:
+                <ion-badge color="secondary">{{ session.rep }}</ion-badge>
+              </div>
+              <div>
+                Letzte Dauer-Differenz:
+                <ion-badge color="success"
+                  >{{ getLastDurationDifference(session) }} min</ion-badge
+                >
+              </div>
+              <div>
+                Letzte Wiederholungs-Differenz:
+                <ion-badge color="danger">{{
+                  getLastRepDifference(session)
+                }}</ion-badge>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
 import {
+  IonPage,
   IonContent,
   IonList,
   IonItem,
@@ -50,7 +53,7 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonBadge,
+  IonBadge
 } from "@ionic/vue";
 import { defineComponent, ref, onMounted } from "vue";
 import axios from "axios";
@@ -65,6 +68,7 @@ interface TrainingSession {
 
 export default defineComponent({
   components: {
+    IonPage,
     IonContent,
     IonList,
     IonItem,

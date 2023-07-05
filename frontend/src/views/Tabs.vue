@@ -12,21 +12,6 @@
           <ion-icon :icon="apps" />
           <ion-label>Workouts</ion-label>
         </ion-tab-button>
-
-        <ion-tab-button tab="todo" href="/tabs/todo">
-          <ion-icon :icon="flash" />
-          <ion-label>Todo</ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button tab="projects" href="/tabs/projects">
-          <ion-icon :icon="apps" />
-          <ion-label>Projects</ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button tab="timerecord" href="/tabs/timerecord">
-          <ion-icon :icon="send" />
-          <ion-label>Timerecord</ion-label>
-        </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
