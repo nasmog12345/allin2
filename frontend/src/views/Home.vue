@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-card>
+            <ion-card>
         <ion-card-header>
           <ion-card-title class="ion-text-center"
             >Training Session</ion-card-title
@@ -9,6 +9,7 @@
         </ion-card-header>
 
       <ion-card-content>
+        <img src="/logo.png" alt="ALLIN Logo" class="logo-image" />
         <ion-item>
           <ion-label position="floating">Training Date</ion-label>
           <br />
