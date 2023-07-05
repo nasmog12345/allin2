@@ -4,7 +4,9 @@
       <div class="form-container">
         <ion-card>
           <ion-card-header>
-            <ion-card-title class="ion-text-center">Training Session</ion-card-title>
+            <ion-card-title class="ion-text-center"
+              >Training Session</ion-card-title
+            >
           </ion-card-header>
 
           <ion-card-content>
@@ -24,6 +26,22 @@
             </ion-item>
 
             <ion-item>
+              <ion-label>Exercise Name</ion-label>
+              <ion-select
+                v-model="exerciseName"
+                interface="action-sheet"
+                class="custom-select"
+              >
+                <ion-select-option
+                  v-for="exercise in exercises"
+                  :value="exercise"
+                  :key="exercise"
+                  >{{ exercise }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
               <ion-label position="floating">Weights</ion-label>
               <ion-input type="number" v-model="weights"></ion-input>
             </ion-item>
@@ -38,19 +56,9 @@
               <ion-input type="number" v-model="sets"></ion-input>
             </ion-item>
 
-            <ion-item>
-              <ion-label>Exercise Name</ion-label>
-              <ion-select v-model="exerciseName" interface="action-sheet">
-                <ion-select-option
-                  v-for="exercise in exercises"
-                  :value="exercise"
-                  :key="exercise"
-                  >{{ exercise }}</ion-select-option
-                >
-              </ion-select>
-            </ion-item>
-
-            <ion-button expand="full" @click="postTrainingSession">Submit</ion-button>
+            <ion-button expand="full" @click="postTrainingSession"
+              >Submit</ion-button
+            >
           </ion-card-content>
         </ion-card>
       </div>
@@ -184,5 +192,9 @@ ion-content.full-content {
   max-width: 150px;
   max-height: 150px;
   object-fit: contain;
+}
+
+ion-select.custom-select {
+  --ion-select-indicator-margin-end: 10px; /* Adjust the margin value as needed */
 }
 </style>
