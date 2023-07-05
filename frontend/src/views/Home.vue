@@ -163,6 +163,7 @@ export default defineComponent({
       exerciseName,
       exercises,
       postTrainingSession,
+      //test
     };
   },
 });
