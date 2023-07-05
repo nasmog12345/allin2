@@ -9,7 +9,7 @@
         </ion-tab-button>
 
         <ion-tab-button tab="workouts" href="/tabs/workouts">
-          <ion-icon :icon="flash" />
+          <ion-icon :icon="apps" />
           <ion-label>Workouts</ion-label>
         </ion-tab-button>
 

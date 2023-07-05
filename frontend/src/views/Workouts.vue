@@ -1,27 +1,29 @@
 <template>
-  <ion-content>
-    <ion-list>
-      <ion-item v-for="session in trainingSessions" :key="session.id">
-        <ion-label>
-          Datum: {{ session.trainingDate }}
-          <br />
-          Dauer: {{ session.trainingDurationMinutes }} min
-          <br />
-          Wiederholungen: {{ session.rep }}
-          <br />
-          Übung: {{ session.exercise }}
-          <br />
-          Letzte Dauer-Differenz: {{ getLastDurationDifference(session) }} min
-          <br />
-          Letzte Wiederholungs-Differenz: {{ getLastRepDifference(session) }}
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+  <ion-page>
+    <ion-content>
+      <ion-list>
+        <ion-item v-for="session in trainingSessions" :key="session.id">
+          <ion-label>
+            Datum: {{ session.trainingDate }}
+            <br />
+            Dauer: {{ session.trainingDurationMinutes }} min
+            <br />
+            Wiederholungen: {{ session.rep }}
+            <br />
+            Übung: {{ session.exercise }}
+            <br />
+            Letzte Dauer-Differenz: {{ getLastDurationDifference(session) }} min
+            <br />
+            Letzte Wiederholungs-Differenz: {{ getLastRepDifference(session) }}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
-import { IonContent, IonList, IonItem, IonLabel } from "@ionic/vue";
+import { IonContent, IonList, IonItem, IonLabel, IonPage } from "@ionic/vue";
 import { defineComponent, ref, onMounted } from "vue";
 import axios from "axios";
 
@@ -34,7 +36,7 @@ interface TrainingSession {
 }
 
 export default defineComponent({
-  components: { IonContent, IonList, IonItem, IonLabel },
+  components: { IonContent, IonList, IonItem, IonLabel, IonPage },
   setup() {
     const sessionInit: TrainingSession = {
       id: "",

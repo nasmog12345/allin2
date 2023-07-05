@@ -1,43 +1,50 @@
 <template>
-  <ion-content>
-    <ion-item>
-      <ion-label position="floating">Training Date</ion-label>
-      <br />
-      <ion-button v-if="!showDatePicker" @click="showDatePicker = true"
-        >Wähle Datum</ion-button
-      >
-      <ion-datetime
-        v-else
-        v-model="trainingDate"
-        display-format="DD-MMM-YYYY"
-        placeholder="Select Date"
-      ></ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Duration (minutes)</ion-label>
-      <ion-input type="number" v-model="duration"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Repetitions</ion-label>
-      <ion-input type="number" v-model="repetitions"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Exercise Name</ion-label>
-      <ion-select v-model="exerciseName">
-        <ion-select-option
-          v-for="exercise in exercises"
-          :value="exercise"
-          :key="exercise"
-          >{{ exercise }}</ion-select-option
+  <ion-page>
+    <ion-content>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Neues Workout</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-item>
+        <ion-label position="floating">Training Date</ion-label>
+        <br />
+        <ion-button v-if="!showDatePicker" @click="showDatePicker = true"
+          >Wähle Datum</ion-button
         >
-      </ion-select>
-    </ion-item>
+        <ion-datetime
+          v-else
+          v-model="trainingDate"
+          display-format="DD-MMM-YYYY"
+          placeholder="Select Date"
+        ></ion-datetime>
+      </ion-item>
 
-    <ion-button @click="postTrainingSession">Submit</ion-button>
-  </ion-content>
+      <ion-item>
+        <ion-label position="floating">Duration (minutes)</ion-label>
+        <ion-input type="number" v-model="duration"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Repetitions</ion-label>
+        <ion-input type="number" v-model="repetitions"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Exercise Name</ion-label>
+        <ion-select v-model="exerciseName">
+          <ion-select-option
+            v-for="exercise in exercises"
+            :value="exercise"
+            :key="exercise"
+            >{{ exercise }}</ion-select-option
+          >
+        </ion-select>
+      </ion-item>
+
+      <ion-button @click="postTrainingSession">Submit</ion-button>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
@@ -48,6 +55,7 @@ import {
   IonLabel,
   IonInput,
   IonSelect,
+  IonPage,
   IonSelectOption,
   IonButton,
 } from "@ionic/vue";
@@ -61,12 +69,13 @@ export default defineComponent({
     IonItem,
     IonLabel,
     IonInput,
+    IonPage,
     IonSelect,
     IonSelectOption,
     IonButton,
   },
   setup() {
-    const trainingDate = ref(null);
+    const trainingDate = ref("");
     const showDatePicker = ref(false);
     const duration = ref(0);
     const repetitions = ref(0);
