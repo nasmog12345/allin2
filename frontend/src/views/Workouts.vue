@@ -1,44 +1,41 @@
 <template>
   <ion-page>
     <ion-content>
-      <ion-searchbar
-        mode="ios"
-        v-model="filterText"
-        placeholder="Search Exercises"
-      ></ion-searchbar>
-
+      <ion-toolbar>
+        <ion-searchbar v-model="filterExercise" placeholder="Search Exercise"></ion-searchbar>
+      </ion-toolbar>
       <ion-list>
         <ion-item v-for="session in filteredTrainingSessions" :key="session.id">
           <ion-card>
             <ion-card-header>
               <ion-card-title>{{ session.exercise }}</ion-card-title>
-              <ion-card-subtitle
-                >Datum: {{ session.trainingDate }}</ion-card-subtitle
-              >
+              <ion-card-subtitle>Date: {{ session.trainingDate }}</ion-card-subtitle>
             </ion-card-header>
 
             <ion-card-content>
               <div>
-                Dauer:
-                <ion-badge color="primary"
-                  >{{ session.trainingDurationMinutes }} min</ion-badge
-                >
+                Weight:
+                <ion-badge color="primary">{{ session.weights }} kg</ion-badge>
               </div>
               <div>
-                Wiederholungen:
-                <ion-badge color="secondary">{{ session.rep }}</ion-badge>
+                Repetitions:
+                <ion-badge color="secondary">{{ session.reps }}</ion-badge>
               </div>
               <div>
-                Letzte Dauer-Differenz:
-                <ion-badge color="success"
-                  >{{ getLastDurationDifference(session) }} min</ion-badge
-                >
+                Sets:
+                <ion-badge color="tertiary">{{ session.sets }}</ion-badge>
               </div>
               <div>
-                Letzte Wiederholungs-Differenz:
-                <ion-badge color="danger">{{
-                  getLastRepDifference(session)
-                }}</ion-badge>
+                Volume Progress:
+                <ion-badge color="success">{{ getLastWeightsDifference(session) }} kg</ion-badge>
+              </div>
+              <div>
+                Repetitions Progress:
+                <ion-badge color="danger">{{ getLastRepsDifference(session) }}</ion-badge>
+              </div>
+              <div>
+                Sets Progress:
+                <ion-badge color="warning">{{ getLastSetsDifference(session) }}</ion-badge>
               </div>
             </ion-card-content>
           </ion-card>
@@ -52,6 +49,8 @@
 import {
   IonPage,
   IonContent,
+  IonToolbar,
+  IonSearchbar,
   IonList,
   IonItem,
   IonCard,
@@ -60,16 +59,16 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonBadge,
-  IonSearchbar,
 } from "@ionic/vue";
-import { defineComponent, ref, onMounted, computed } from "vue";
+import { defineComponent, ref, computed, onMounted } from "vue";
 import axios from "axios";
 
 interface TrainingSession {
   id: string;
   trainingDate: string;
-  trainingDurationMinutes: number;
-  rep: number;
+  weights: number;
+  reps: number;
+  sets: number;
   exercise: string;
 }
 
@@ -77,6 +76,8 @@ export default defineComponent({
   components: {
     IonPage,
     IonContent,
+    IonToolbar,
+    IonSearchbar,
     IonList,
     IonItem,
     IonCard,
@@ -85,51 +86,40 @@ export default defineComponent({
     IonCardSubtitle,
     IonCardContent,
     IonBadge,
-    IonSearchbar,
   },
   setup() {
     const sessionInit: TrainingSession = {
       id: "",
       trainingDate: "",
-      trainingDurationMinutes: 0,
-      rep: 0,
+      weights: 0,
+      reps: 0,
+      sets: 0,
       exercise: "",
     };
 
     const trainingSessions = ref<TrainingSession[]>([sessionInit]);
-    const filterText = ref("");
 
     const fetchTrainingSessions = async () => {
       try {
-        const response = await axios.get<TrainingSession[]>(
-          "http://localhost:8080/api/sessions",
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get<TrainingSession[]>("http://localhost:8080/api/sessions", {
+          withCredentials: true,
+        });
         trainingSessions.value = response.data;
       } catch (error) {
         console.error(error);
       }
     };
 
-    const getLastDurationDifference = (session: TrainingSession) => {
+    const getLastWeightsDifference = (session: TrainingSession) => {
       const sessions = trainingSessions.value;
-      const exerciseSessions = sessions.filter(
-        (s) => s.exercise === session.exercise
-      );
+      const exerciseSessions = sessions.filter((s) => s.exercise === session.exercise);
 
       if (exerciseSessions.length >= 2) {
-        const currentSessionIndex = exerciseSessions.findIndex(
-          (s) => s.id === session.id
-        );
+        const currentSessionIndex = exerciseSessions.findIndex((s) => s.id === session.id);
         if (currentSessionIndex > 0) {
           const previousSession = exerciseSessions[currentSessionIndex - 1];
           if (previousSession.exercise === session.exercise) {
-            return (
-              session.trainingDurationMinutes -
-              previousSession.trainingDurationMinutes
-            );
+            return session.weights - previousSession.weights;
           }
         }
       }
@@ -137,31 +127,46 @@ export default defineComponent({
       return null;
     };
 
-    const getLastRepDifference = (session: TrainingSession) => {
+    const getLastRepsDifference = (session: TrainingSession) => {
       const sessions = trainingSessions.value;
-      const exerciseSessions = sessions.filter(
-        (s) => s.exercise === session.exercise
-      );
+      const exerciseSessions = sessions.filter((s) => s.exercise === session.exercise);
 
       if (exerciseSessions.length >= 2) {
-        const currentSessionIndex = exerciseSessions.findIndex(
-          (s) => s.id === session.id
-        );
+        const currentSessionIndex = exerciseSessions.findIndex((s) => s.id === session.id);
         if (currentSessionIndex > 0) {
           const previousSession = exerciseSessions[currentSessionIndex - 1];
           if (previousSession.exercise === session.exercise) {
-            return session.rep - previousSession.rep;
+            return session.reps - previousSession.reps;
           }
         }
       }
 
       return null;
     };
+
+    const getLastSetsDifference = (session: TrainingSession) => {
+      const sessions = trainingSessions.value;
+      const exerciseSessions = sessions.filter((s) => s.exercise === session.exercise);
+
+      if (exerciseSessions.length >= 2) {
+        const currentSessionIndex = exerciseSessions.findIndex((s) => s.id === session.id);
+        if (currentSessionIndex > 0) {
+          const previousSession = exerciseSessions[currentSessionIndex - 1];
+          if (previousSession.exercise === session.exercise) {
+            return session.sets - previousSession.sets;
+          }
+        }
+      }
+
+      return null;
+    };
+
+    const filterExercise = ref("");
 
     const filteredTrainingSessions = computed(() => {
-      const searchText = filterText.value.toLowerCase();
+      const filter = filterExercise.value.toLowerCase();
       return trainingSessions.value.filter((session) =>
-        session.exercise.toLowerCase().includes(searchText)
+        session.exercise.toLowerCase().includes(filter)
       );
     });
 
@@ -169,10 +174,11 @@ export default defineComponent({
 
     return {
       trainingSessions,
-      filterText,
+      getLastWeightsDifference,
+      getLastRepsDifference,
+      getLastSetsDifference,
+      filterExercise,
       filteredTrainingSessions,
-      getLastDurationDifference,
-      getLastRepDifference,
     };
   },
 });

@@ -1,56 +1,59 @@
 <template>
-  <ion-page>
-    <ion-content>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title class="ion-text-center"
-            >Training Session</ion-card-title
-          >
-        </ion-card-header>
+  <ion-page class="full-page">
+    <ion-content class="full-content">
+      <div class="form-container">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">Training Session</ion-card-title>
+          </ion-card-header>
 
-        <ion-card-content>
-          <img src="/logo.png" alt="ALLIN Logo" class="logo-image" />
-          <ion-item>
-            <ion-label position="floating">Training Date</ion-label>
-            <br />
-            <ion-button v-if="!showDatePicker" @click="showDatePicker = true">
-              Wähle Datum
-            </ion-button>
-            <ion-datetime
-              v-else
-              v-model="trainingDate"
-              display-format="DD-MMM-YYYY"
-              placeholder="Select Date"
-            ></ion-datetime>
-          </ion-item>
+          <ion-card-content>
+            <img src="/logo.png" alt="ALLIN Logo" class="logo-image" />
+            <ion-item>
+              <ion-label position="floating">Training Date</ion-label>
+              <br />
+              <ion-button v-if="!showDatePicker" @click="showDatePicker = true">
+                Wähle Datum
+              </ion-button>
+              <ion-datetime
+                v-else
+                v-model="trainingDate"
+                display-format="DD-MMM-YYYY"
+                placeholder="Select Date"
+              ></ion-datetime>
+            </ion-item>
 
-          <ion-item>
-            <ion-label position="floating">Duration (minutes)</ion-label>
-            <ion-input type="number" v-model="duration"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label position="floating">Weights</ion-label>
+              <ion-input type="number" v-model="weights"></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-label position="floating">Repetitions</ion-label>
-            <ion-input type="number" v-model="repetitions"></ion-input>
-          </ion-item>
+            <ion-item>
+              <ion-label position="floating">Repetitions</ion-label>
+              <ion-input type="number" v-model="reps"></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-label>Exercise Name</ion-label>
-            <ion-select v-model="exerciseName" interface="action-sheet">
-              <ion-select-option
-                v-for="exercise in exercises"
-                :value="exercise"
-                :key="exercise"
-                >{{ exercise }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
+            <ion-item>
+              <ion-label position="floating">Sets</ion-label>
+              <ion-input type="number" v-model="sets"></ion-input>
+            </ion-item>
 
-          <ion-button expand="full" @click="postTrainingSession"
-            >Submit</ion-button
-          >
-        </ion-card-content>
-      </ion-card>
+            <ion-item>
+              <ion-label>Exercise Name</ion-label>
+              <ion-select v-model="exerciseName" interface="action-sheet">
+                <ion-select-option
+                  v-for="exercise in exercises"
+                  :value="exercise"
+                  :key="exercise"
+                  >{{ exercise }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+
+            <ion-button expand="full" @click="postTrainingSession">Submit</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
     </ion-content>
   </ion-page>
 </template>
@@ -93,8 +96,9 @@ export default defineComponent({
   setup() {
     const trainingDate = ref("");
     const showDatePicker = ref(false);
-    const duration = ref(0);
-    const repetitions = ref(0);
+    const weights = ref(0);
+    const reps = ref(0);
+    const sets = ref(0);
     const exerciseName = ref("");
     const exercises = ref([
       "Bench Press",
@@ -112,15 +116,18 @@ export default defineComponent({
       "Latral Row",
       "Wide Pull Down",
       "Hip Thrust",
-      "Biceps Curls",
-      "Leg Press",
+      "Calf Raise",
+      "Plank",
+      "Crunches",
+      "Russian Twist",
     ]);
 
     const postTrainingSession = async () => {
       const trainingSession = {
         trainingDate: trainingDate.value,
-        trainingDurationMinutes: duration.value,
-        rep: repetitions.value,
+        weights: weights.value,
+        reps: reps.value,
+        sets: sets.value,
         exercise: exerciseName.value,
       };
 
@@ -142,8 +149,9 @@ export default defineComponent({
     return {
       trainingDate,
       showDatePicker,
-      duration,
-      repetitions,
+      weights,
+      reps,
+      sets,
       exerciseName,
       exercises,
       postTrainingSession,
@@ -153,16 +161,28 @@ export default defineComponent({
 </script>
 
 <style scoped>
-ion-content {
-  --ion-background-color: #f4f4f4;
+ion-content.full-content {
+  --ion-background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
-ion-card {
+.full-page {
+  background-color: black;
+}
+
+.form-container {
   max-width: 400px;
-  margin: 0 auto;
+  margin: auto;
 }
 
-ion-button[expand="full"] {
-  margin-top: 20px;
+.logo-image {
+  display: block;
+  margin: 0 auto;
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: contain;
 }
 </style>
