@@ -183,18 +183,3 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped>
-ion-content {
-  --ion-background-color: #f4f4f4;
-}
-
-
-ion-card {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-ion-button[expand="full"] {
-  margin-top: 20px;
-}
-</style>
