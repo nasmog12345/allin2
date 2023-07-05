@@ -4,9 +4,7 @@
       <div class="form-container">
         <ion-card>
           <ion-card-header>
-            <ion-card-title class="ion-text-center"
-              >Training Session</ion-card-title
-            >
+            <ion-card-title class="ion-text-center">Training Session</ion-card-title>
           </ion-card-header>
 
           <ion-card-content>
@@ -15,7 +13,7 @@
               <ion-label position="floating">Training Date</ion-label>
               <br />
               <ion-button v-if="!showDatePicker" @click="showDatePicker = true">
-                Wähle Datum
+                Choose Date
               </ion-button>
               <ion-datetime
                 v-else
@@ -56,9 +54,13 @@
               <ion-input type="number" v-model="sets"></ion-input>
             </ion-item>
 
-            <ion-button expand="full" @click="postTrainingSession"
-              >Submit</ion-button
-            >
+            <ion-button expand="full" @click="postTrainingSession">Submit</ion-button>
+            <ion-toast
+              :is-open="showToast"
+              :message="toastMessage"
+              position="middle"
+              :duration="3000"
+            ></ion-toast>
           </ion-card-content>
         </ion-card>
       </div>
@@ -81,6 +83,7 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
+  IonToast,
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import axios from "axios";
@@ -100,6 +103,7 @@ export default defineComponent({
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
+    IonToast,
   },
   setup() {
     const trainingDate = ref("");
@@ -130,6 +134,9 @@ export default defineComponent({
       "Russian Twist",
     ]);
 
+    const showToast = ref(false);
+    const toastMessage = ref("");
+
     const postTrainingSession = async () => {
       const trainingSession = {
         trainingDate: trainingDate.value,
@@ -142,6 +149,7 @@ export default defineComponent({
       const config = {
         withCredentials: true,
       };
+
       try {
         const response = await axios.post(
           "http://localhost:8080/api/sessions",
@@ -149,6 +157,9 @@ export default defineComponent({
           config
         );
         console.log(response);
+
+        showToast.value = true;
+        toastMessage.value = "Workout created successfully";
       } catch (error) {
         console.error(error);
       }
@@ -162,6 +173,8 @@ export default defineComponent({
       sets,
       exerciseName,
       exercises,
+      showToast,
+      toastMessage,
       postTrainingSession,
     };
   },
@@ -196,5 +209,17 @@ ion-content.full-content {
 
 ion-select.custom-select {
   --ion-select-indicator-margin-end: 10px; /* Adjust the margin value as needed */
+}
+
+ion-toast {
+  --max-width: 230px; /* Adjust the maximum width as needed */
+}
+
+.toast-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 </style>

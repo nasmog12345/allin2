@@ -1,5 +1,11 @@
 <template>
   <ion-page>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Training Sessions</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
     <ion-content>
       <ion-toolbar>
         <ion-searchbar v-model="filterExercise" placeholder="Search Exercise"></ion-searchbar>
@@ -48,8 +54,10 @@
 <script lang="ts">
 import {
   IonPage,
-  IonContent,
+  IonHeader,
   IonToolbar,
+  IonTitle,
+  IonContent,
   IonSearchbar,
   IonList,
   IonItem,
@@ -59,6 +67,9 @@ import {
   IonCardSubtitle,
   IonCardContent,
   IonBadge,
+  IonFab,
+  IonFabButton,
+  IonIcon,
 } from "@ionic/vue";
 import { defineComponent, ref, computed, onMounted } from "vue";
 import axios from "axios";
@@ -75,8 +86,10 @@ interface TrainingSession {
 export default defineComponent({
   components: {
     IonPage,
-    IonContent,
+    IonHeader,
     IonToolbar,
+    IonTitle,
+    IonContent,
     IonSearchbar,
     IonList,
     IonItem,
@@ -86,6 +99,9 @@ export default defineComponent({
     IonCardSubtitle,
     IonCardContent,
     IonBadge,
+    IonFab,
+    IonFabButton,
+    IonIcon,
   },
   setup() {
     const sessionInit: TrainingSession = {
@@ -170,6 +186,33 @@ export default defineComponent({
       );
     });
 
+    const postTrainingSession = async () => {
+      const newSession: TrainingSession = {
+        id: "", // Set the appropriate value for the id
+        trainingDate: "", // Set the appropriate value for the training date
+        weights: 0, // Set the appropriate value for weights
+        reps: 0, // Set the appropriate value for reps
+        sets: 0, // Set the appropriate value for sets
+        exercise: "", // Set the appropriate value for exercise
+      };
+
+      const config = {
+        withCredentials: true,
+      };
+
+      try {
+        const response = await axios.post(
+          "http://localhost:8080/api/sessions",
+          [newSession],
+          config
+        );
+        console.log(response);
+        fetchTrainingSessions(); // Call the fetchTrainingSessions function to refresh the page
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     onMounted(fetchTrainingSessions);
 
     return {
@@ -179,6 +222,7 @@ export default defineComponent({
       getLastSetsDifference,
       filterExercise,
       filteredTrainingSessions,
+      postTrainingSession,
     };
   },
 });
