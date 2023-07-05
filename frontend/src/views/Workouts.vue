@@ -1,29 +1,57 @@
 <template>
-  <ion-page>
-    <ion-content>
-      <ion-list>
-        <ion-item v-for="session in trainingSessions" :key="session.id">
-          <ion-label>
-            Datum: {{ session.trainingDate }}
-            <br />
-            Dauer: {{ session.trainingDurationMinutes }} min
-            <br />
-            Wiederholungen: {{ session.rep }}
-            <br />
-            Übung: {{ session.exercise }}
-            <br />
-            Letzte Dauer-Differenz: {{ getLastDurationDifference(session) }} min
-            <br />
-            Letzte Wiederholungs-Differenz: {{ getLastRepDifference(session) }}
-          </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-page>
+  <ion-content>
+    <ion-list>
+      <ion-item v-for="session in trainingSessions" :key="session.id">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ session.exercise }}</ion-card-title>
+            <ion-card-subtitle
+              >Datum: {{ session.trainingDate }}</ion-card-subtitle
+            >
+          </ion-card-header>
+
+          <ion-card-content>
+            <div>
+              Dauer:
+              <ion-badge color="primary"
+                >{{ session.trainingDurationMinutes }} min</ion-badge
+              >
+            </div>
+            <div>
+              Wiederholungen:
+              <ion-badge color="secondary">{{ session.rep }}</ion-badge>
+            </div>
+            <div>
+              Letzte Dauer-Differenz:
+              <ion-badge color="success"
+                >{{ getLastDurationDifference(session) }} min</ion-badge
+              >
+            </div>
+            <div>
+              Letzte Wiederholungs-Differenz:
+              <ion-badge color="danger">{{
+                getLastRepDifference(session)
+              }}</ion-badge>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </template>
 
 <script lang="ts">
-import { IonContent, IonList, IonItem, IonLabel, IonPage } from "@ionic/vue";
+import {
+  IonContent,
+  IonList,
+  IonItem,
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardContent,
+  IonBadge,
+} from "@ionic/vue";
 import { defineComponent, ref, onMounted } from "vue";
 import axios from "axios";
 
@@ -36,7 +64,17 @@ interface TrainingSession {
 }
 
 export default defineComponent({
-  components: { IonContent, IonList, IonItem, IonLabel, IonPage },
+  components: {
+    IonContent,
+    IonList,
+    IonItem,
+    IonCard,
+    IonCardHeader,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardContent,
+    IonBadge,
+  },
   setup() {
     const sessionInit: TrainingSession = {
       id: "",
