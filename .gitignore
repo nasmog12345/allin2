@@ -7,6 +7,8 @@ backend/.factorypath
 backend/.project
 backend/.settings
 
+h2-dev*
+
 *.class
 *.war
 *.zip

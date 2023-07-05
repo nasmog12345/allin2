@@ -176,6 +176,7 @@ export default defineComponent({
       showToast,
       toastMessage,
       postTrainingSession,
+      //test
     };
   },
 });
