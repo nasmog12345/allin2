@@ -1,8 +1,14 @@
 <template>
   <ion-page>
     <ion-content>
+      <ion-searchbar
+        mode="ios"
+        v-model="filterText"
+        placeholder="Search Exercises"
+      ></ion-searchbar>
+
       <ion-list>
-        <ion-item v-for="session in trainingSessions" :key="session.id">
+        <ion-item v-for="session in filteredTrainingSessions" :key="session.id">
           <ion-card>
             <ion-card-header>
               <ion-card-title>{{ session.exercise }}</ion-card-title>
@@ -53,9 +59,10 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonBadge
+  IonBadge,
+  IonSearchbar,
 } from "@ionic/vue";
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 interface TrainingSession {
@@ -78,6 +85,7 @@ export default defineComponent({
     IonCardSubtitle,
     IonCardContent,
     IonBadge,
+    IonSearchbar,
   },
   setup() {
     const sessionInit: TrainingSession = {
@@ -89,6 +97,7 @@ export default defineComponent({
     };
 
     const trainingSessions = ref<TrainingSession[]>([sessionInit]);
+    const filterText = ref("");
 
     const fetchTrainingSessions = async () => {
       try {
@@ -149,10 +158,19 @@ export default defineComponent({
       return null;
     };
 
+    const filteredTrainingSessions = computed(() => {
+      const searchText = filterText.value.toLowerCase();
+      return trainingSessions.value.filter((session) =>
+        session.exercise.toLowerCase().includes(searchText)
+      );
+    });
+
     onMounted(fetchTrainingSessions);
 
     return {
       trainingSessions,
+      filterText,
+      filteredTrainingSessions,
       getLastDurationDifference,
       getLastRepDifference,
     };
