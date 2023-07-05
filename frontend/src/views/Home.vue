@@ -8,20 +8,20 @@
           >
         </ion-card-header>
 
-        <ion-card-content>
-          <ion-item>
-            <ion-label position="floating">Training Date</ion-label>
-            <br />
-            <ion-button v-if="!showDatePicker" @click="showDatePicker = true">
-              Wähle Datum
-            </ion-button>
-            <ion-datetime
-              v-else
-              v-model="trainingDate"
-              display-format="DD-MMM-YYYY"
-              placeholder="Select Date"
-            ></ion-datetime>
-          </ion-item>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Training Date</ion-label>
+          <br />
+          <ion-button v-if="!showDatePicker" @click="showDatePicker = true">
+            Wähle Datum
+          </ion-button>
+          <ion-datetime
+            v-else
+            v-model="trainingDate"
+            display-format="DD-MMM-YYYY"
+            placeholder="Select Date"
+          ></ion-datetime>
+        </ion-item>
 
           <ion-item>
             <ion-label position="floating">Duration (minutes)</ion-label>
