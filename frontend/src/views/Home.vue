@@ -11,7 +11,18 @@
         <ion-card-content>
           <img src="/logo.png" alt="ALLIN Logo" class="logo-image" />
           <ion-item>
-            <ion-label position="floating">Training Date</ion-label>
+            <ion-label>Exercise Name</ion-label>
+            <ion-select v-model="exerciseName" interface="action-sheet">
+              <ion-select-option
+                v-for="exercise in exercises"
+                :value="exercise"
+                :key="exercise"
+                >{{ exercise }}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            
             <br />
             <ion-button v-if="!showDatePicker" @click="showDatePicker = true">
               Wähle Datum
@@ -25,27 +36,14 @@
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Duration (minutes)</ion-label>
+            <ion-label position="floating">Gewicht (Kg)</ion-label>
             <ion-input type="number" v-model="duration"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Repetitions</ion-label>
+            <ion-label position="floatingion">Repetitions</ion-label>
             <ion-input type="number" v-model="repetitions"></ion-input>
           </ion-item>
-
-          <ion-item>
-            <ion-label>Exercise Name</ion-label>
-            <ion-select v-model="exerciseName" interface="action-sheet">
-              <ion-select-option
-                v-for="exercise in exercises"
-                :value="exercise"
-                :key="exercise"
-                >{{ exercise }}</ion-select-option
-              >
-            </ion-select>
-          </ion-item>
-
           <ion-button expand="full" @click="postTrainingSession"
             >Submit</ion-button
           >
@@ -153,16 +151,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-ion-content {
-  --ion-background-color: #f4f4f4;
+ion-content,
+ion-page {
+  --ion-background-color: #000000; /* Set the background color to white */
 }
 
 ion-card {
-  max-width: 400px;
+  max-width: 400px; /* Update the max-width if desired */
   margin: 0 auto;
 }
 
 ion-button[expand="full"] {
   margin-top: 20px;
+}
+
+ion-label {
+  color: #000000; /* Set the label color to black */
+  font-size: 20px;
 }
 </style>
