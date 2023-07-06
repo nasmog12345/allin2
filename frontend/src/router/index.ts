@@ -28,6 +28,10 @@ const routes: Array<RouteRecordRaw> = [
         path: "workouts",
         component: () => import("@/views/Workouts.vue"),
       },
+      {
+        path: "excercise",
+        component: () => import("@/views/Excercise.vue"),
+      },
     ],
   },
 ];

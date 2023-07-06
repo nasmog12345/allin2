@@ -12,6 +12,11 @@
           <ion-icon :icon="apps" />
           <ion-label>Workouts</ion-label>
         </ion-tab-button>
+
+        <ion-tab-button tab="excercise" href="/tabs/excercise">
+          <ion-icon :icon="send" />
+          <ion-label>Excercise</ion-label>
+        </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
