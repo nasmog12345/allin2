@@ -158,6 +158,7 @@
     font-size: 1.2em;
     line-height: 1.6;
     text-align: justify;
+    padding: 0 30px;
   }
   </style>
   
