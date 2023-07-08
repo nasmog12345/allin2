@@ -14,8 +14,13 @@
         </ion-tab-button>
 
         <ion-tab-button tab="excercise" href="/tabs/excercise">
-          <ion-icon :icon="send" />
+          <ion-icon :icon="barbellOutline" />
           <ion-label>Excercise</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="progress" href="/tabs/progress">
+          <ion-icon :icon="send" />
+          <ion-label>Progress</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
@@ -32,5 +37,5 @@ import {
   IonPage,
   IonRouterOutlet,
 } from "@ionic/vue";
-import { flash, apps, send } from "ionicons/icons";
+import { flash, apps, barbellOutline, send } from "ionicons/icons";
 </script>
